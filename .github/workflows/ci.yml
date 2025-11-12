@@ -11,12 +11,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '22'
           cache: 'pnpm'
-      - name: Setup pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          standalone: true
+          run_install: false
+      - name: Check tool versions
         run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
+          node --version
           pnpm --version
       - name: Install deps
         run: pnpm install --frozen-lockfile=false

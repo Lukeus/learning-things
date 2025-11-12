@@ -13,7 +13,7 @@ This repo teaches **Spec Kit**–style Spec-Driven Development using AI coding a
 - Apply SDD to new and existing codebases.
 
 ## Prerequisites
-- Git, Node.js 18+ (or your team’s runtime), pnpm (optional) or npm.
+- Git, Node.js 22 LTS, pnpm (optional) or npm.
 - Access to your AI coding assistant (e.g., GitHub Copilot Chat/Agent) configured in the IDE.
 - Familiarity with the **Spec Kit** workflow (commands or slash prompts).
 - [GitHub Spec Kit](https://github.com/github/spec-kit) CLI available locally (installed via npm, pnpm, or your preferred package manager).
