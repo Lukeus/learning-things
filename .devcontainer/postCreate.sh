@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
-npm i -g pnpm@latest || true
+corepack enable || true
+corepack prepare pnpm@latest --activate || true
