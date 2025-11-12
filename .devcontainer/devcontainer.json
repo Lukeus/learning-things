@@ -1,0 +1,16 @@
+{
+  "name": "sdd-training",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "postCreateCommand": "bash .devcontainer/postCreate.sh",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.copilot-chat",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "spec-kit-sdd-training",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "lint": "echo 'no lint configured'",
+    "test": "echo 'no tests yet' && exit 0"
+  }
+}
