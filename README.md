@@ -75,6 +75,13 @@ You can open each linked `README.md` directly and work through the steps with yo
 ## Rubric
 See `handouts/Rubric.md`.
 
+## Help / Questions
+For any tutorial questions or if you need assistance, email: [Luke.Adams@intel.com](mailto:Luke.Adams@intel.com). Please include:
+- Which lab (A or B)
+- The artifact or step you're on (e.g., Spec, Plan, Tasks)
+- Any Spec Kit CLI output (if relevant)
+- Your environment (OS, Node.js version)
+
 ## Notes
 - If the assistant’s code drifts from the spec, revise the *spec/plan/tasks* first, then regenerate.
 - Keep all artifacts versioned in-repo.
