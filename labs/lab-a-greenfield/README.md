@@ -15,6 +15,7 @@
    ```
 3. Author `constitution/Project-Principles.md` by copying and editing `../../constitution/Project-Principles.template.md`.
 4. Create `Spec.md` from `../../templates/Spec.md`, filling it out based on `SCENARIO.md` (in this directory).
+   - Clarify uniqueness: slugs must be unique; multiple slugs may point to the same target URL.
 5. Create `Clarifications.md` and resolve questions using your AI assistant.
 6. Create `Plan.md` and `Tasks.md` with your AI assistant.
 7. Implement with your AI assistant; keep code aligned to the spec.

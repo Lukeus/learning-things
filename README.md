@@ -46,12 +46,27 @@ pnpm install
 
 If the automated install fails, follow the instructions in the [GitHub Spec Kit repository](https://github.com/github/spec-kit) to install or update the CLI before starting the labs.
 
+### Spec Kit Primer (New Users)
+If you have never used Spec Kit:
+
+1. Run `spec-kit init` inside your project directory.
+2. Generate artifacts: `spec-kit generate principles spec clarifications plan tasks`.
+3. Fill out each file using the templates and scenarios provided in the labs.
+4. Use the clarify → plan → tasks loop before writing code.
+5. Keep artifacts updated; if implementation reveals gaps, revise spec/plan/tasks first.
+
+See the detailed command list in `handouts/Quick-Reference.md`.
+
 ### Dev Container (optional)
 Open in VS Code and select **Reopen in Container** to auto-install tools.
 
 ## Exercises
-- Start with `labs/lab-a-greenfield/README.md`.
-- Then do `labs/lab-b-brownfield/README.md`.
+Follow this sequence:
+
+1. Start with [Lab A – Greenfield](labs/lab-a-greenfield/README.md) – build a tiny feature from scratch using the spec → plan → tasks → implement loop.
+2. Then proceed to [Lab B – Brownfield](labs/lab-b-brownfield/README.md) – add a feature to an existing repo and backfill specs/tests for one legacy flow.
+
+You can open each linked `README.md` directly and work through the steps with your AI assistant.
 
 ## Definitions of Done (per lab)
 - **Lab A**: Principles committed; Spec/Clarifications/Plan/Tasks authored; minimal feature passes tests in CI.
