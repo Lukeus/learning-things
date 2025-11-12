@@ -13,17 +13,35 @@ This repo teaches **Spec Kit**–style Spec-Driven Development using AI coding a
 - Apply SDD to new and existing codebases.
 
 ## Prerequisites
-- Git, Node.js 22 LTS, pnpm (optional) or npm.
-- Access to your AI coding assistant (e.g., GitHub Copilot Chat/Agent) configured in the IDE.
-- Familiarity with the **Spec Kit** workflow (commands or slash prompts).
-- [GitHub Spec Kit](https://github.com/github/spec-kit) CLI available locally (installed via npm, pnpm, or your preferred package manager).
+- Git, Node.js 22 LTS, and npm (or pnpm if preferred).
+- Access to your AI coding assistant (e.g., GitHub Copilot Chat/Agent, Warp Agent, or Claude) configured in your IDE or terminal.
+- Basic understanding of the **Spec Kit** workflow: a structured approach to writing specifications, plans, and tasks before implementation. See the [GitHub Spec Kit documentation](https://github.com/github/spec-kit) for details.
+- [GitHub Spec Kit](https://github.com/github/spec-kit) CLI installed locally (see Quick Start below).
 
 ## Quick Start
+
+**Choose your package manager:** Use either npm (included with Node.js) or pnpm (faster, space-efficient). All examples show both.
+
+### Unix/macOS
 ```bash
-# optional: use pnpm; otherwise swap to npm
+# Install dependencies (choose one)
+npm install
+# OR
 pnpm install
+
 ./scripts/setup.sh        # checks Node/npm/pnpm and installs GitHub Spec Kit if missing
 ./scripts/print-tree.sh   # shows repo layout
+```
+
+### Windows (PowerShell)
+```powershell
+# Install dependencies (choose one)
+npm install
+# OR
+pnpm install
+
+.\scripts\setup.ps1       # checks Node/npm/pnpm and installs GitHub Spec Kit if missing
+.\scripts\print-tree.ps1  # shows repo layout
 ```
 
 If the automated install fails, follow the instructions in the [GitHub Spec Kit repository](https://github.com/github/spec-kit) to install or update the CLI before starting the labs.
