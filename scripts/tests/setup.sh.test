@@ -101,8 +101,6 @@ EOF
 test_npx_fallback() {
   local temp_dir
   temp_dir=$(mktemp -d)
-  local temp_dir
-  temp_dir=$(mktemp -d)
   temp_dirs+=("$temp_dir")
 
   cat <<'EOF' >"${temp_dir}/node"
