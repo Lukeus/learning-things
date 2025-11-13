@@ -14,10 +14,12 @@ jobs:
           node-version: 'lts/*'
       - uses: pnpm/action-setup@v4
         with:
-          version: latest
           run_install: false
+          package_json_path: ./package.json
       - name: Verify pnpm
         run: pnpm --version
+      - name: Test setup script
+        run: bash scripts/tests/setup.sh.test
       - name: Install deps
         run: pnpm install --frozen-lockfile=false
       - name: Lint & Test

@@ -1,0 +1,190 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+scripts_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+setup_script="${scripts_dir}/setup.sh"
+
+failures=0
+declare -a temp_dirs=()
+
+cleanup() {
+  for dir in "${temp_dirs[@]}"; do
+    rm -rf "$dir"
+  done
+}
+
+trap cleanup EXIT
+
+record_failure() {
+  local message=$1
+  printf 'FAIL: %s\n' "$message" >&2
+  failures=$((failures + 1))
+}
+
+assert_contains() {
+  local haystack=$1
+  local needle=$2
+  if [[ "$haystack" != *"$needle"* ]]; then
+    record_failure "expected output to contain: $needle"
+    printf -- '--- output ---\n%s\n-------------\n' "$haystack" >&2
+  fi
+}
+
+test_missing_node() {
+  set +e
+  local output
+  output=$(env -i PATH="" "$BASH" "$setup_script" 2>&1)
+  local status=$?
+  set -e
+
+  if [[ $status -ne 1 ]]; then
+    record_failure "expected exit status 1 when Node.js is missing (got $status)"
+    printf '%s\n' "$output" >&2
+    return
+  fi
+
+  assert_contains "$output" "Node.js not found. Please install Node.js 22 LTS."
+}
+
+test_success_with_pnpm() {
+  local temp_dir
+  temp_dir=$(mktemp -d)
+  temp_dirs+=("$temp_dir")
+
+  cat <<'EOF' >"${temp_dir}/node"
+#!/bin/sh
+echo "v22.0.0"
+EOF
+
+  cat <<'EOF' >"${temp_dir}/npm"
+#!/bin/sh
+exit 0
+EOF
+
+  cat <<'EOF' >"${temp_dir}/pnpm"
+#!/bin/sh
+if [ "$1" = "-v" ]; then
+  echo "9.0.0"
+else
+  echo "pnpm stub"
+fi
+EOF
+
+  cat <<'EOF' >"${temp_dir}/specify"
+#!/bin/sh
+if [ "$1" = "--version" ]; then
+  echo "1.2.3"
+  exit 0
+fi
+echo "specify stub"
+EOF
+
+  chmod +x "${temp_dir}"/*
+
+  set +e
+  local output
+  output=$(PATH="${temp_dir}:$PATH" "$BASH" "$setup_script" 2>&1)
+  local status=$?
+  set -e
+
+  if [[ $status -ne 0 ]]; then
+    record_failure "expected exit status 0 with stub pnpm (got $status)"
+    printf '%s\n' "$output" >&2
+    return
+  fi
+
+  assert_contains "$output" "pnpm (pnpm): 9.0.0"
+  assert_contains "$output" "GitHub Spec Kit: 1.2.3"
+  assert_contains "$output" "Repo ready"
+}
+
+test_npx_fallback() {
+  local temp_dir
+  temp_dir=$(mktemp -d)
+  temp_dirs+=("$temp_dir")
+
+  cat <<'EOF' >"${temp_dir}/node"
+#!/bin/sh
+echo "v22.0.0"
+EOF
+
+  cat <<'EOF' >"${temp_dir}/npm"
+#!/bin/sh
+exit 0
+EOF
+
+  cat <<'EOF' >"${temp_dir}/npx"
+#!/bin/sh
+if [ "$1" = "--yes" ] && [ "$2" = "pnpm@latest" ] && [ "$3" = "--" ] && [ "$4" = "--version" ]; then
+  echo "9.1.0"
+  exit 0
+fi
+exit 1
+EOF
+
+  cat <<'EOF' >"${temp_dir}/specify"
+#!/bin/sh
+if [ "$1" = "--version" ]; then
+  echo "1.2.3"
+  exit 0
+fi
+echo "specify stub"
+EOF
+
+  cat <<'EOF' >"${temp_dir}/tail"
+#!/bin/sh
+if [ "$1" = "-n" ] && [ "$2" = "1" ]; then
+  shift 2
+  last=""
+  if [ $# -eq 0 ]; then
+    while IFS= read -r line; do
+      last="$line"
+    done
+  else
+    while [ $# -gt 0 ]; do
+      while IFS= read -r line; do
+        last="$line"
+      done <"$1"
+      shift
+    done
+  fi
+  [ -n "$last" ] && printf '%s\n' "$last"
+  exit 0
+fi
+echo "tail stub only supports '-n 1'" >&2
+exit 1
+EOF
+
+  chmod +x "${temp_dir}"/*
+
+  set +e
+  local output
+  output=$(PATH="${temp_dir}" "$BASH" "$setup_script" 2>&1)
+  local status=$?
+  set -e
+
+  if [[ $status -ne 0 ]]; then
+    record_failure "expected exit status 0 when using npx fallback (got $status)"
+    printf '%s\n' "$output" >&2
+    return
+  fi
+
+  assert_contains "$output" "Corepack not available; checking for npx fallback."
+  assert_contains "$output" "Using npx to invoke pnpm temporarily..."
+  assert_contains "$output" "pnpm (npx pnpm@latest): 9.1.0"
+}
+
+main() {
+  test_missing_node
+  test_success_with_pnpm
+  test_npx_fallback
+
+  if [[ $failures -ne 0 ]]; then
+    printf '\n%d test(s) failed.\n' "$failures" >&2
+    exit 1
+  fi
+
+  printf 'All setup.sh tests passed.\n'
+}
+
+main "$@"
