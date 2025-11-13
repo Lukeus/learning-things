@@ -11,26 +11,26 @@
 - **Implement**: Let the assistant scaffold; keep to the plan; refactor behind clear seams.
 - **Review**: Does the implementation match the spec? If not, update spec/plan and iterate.
 
-## Common Spec Kit CLI Commands
+## Common Spec Kit CLI Commands (`specify`)
 
 ```bash
-# Initialize spec-kit in a project
-spec-kit init
+# Initialize Spec Kit in a project
+specify init
 
 # Generate individual artifacts
-spec-kit generate principles      # Create Project-Principles.md
-spec-kit generate spec            # Create Spec.md
-spec-kit generate clarifications  # Create Clarifications.md
-spec-kit generate plan            # Create Plan.md
-spec-kit generate tasks           # Create Tasks.md
+specify generate principles      # Create Project-Principles.md
+specify generate spec            # Create Spec.md
+specify generate clarifications  # Create Clarifications.md
+specify generate plan            # Create Plan.md
+specify generate tasks           # Create Tasks.md
 
 # Validate artifacts
-spec-kit validate spec            # Check spec completeness
-spec-kit validate plan            # Check plan structure
+specify validate spec            # Check spec completeness
+specify validate plan            # Check plan structure
 
 # Update existing artifacts
-spec-kit update spec              # Revise spec with AI assistance
-spec-kit update tasks             # Update tasks based on spec changes
+specify update spec              # Revise spec with AI assistance
+specify update tasks             # Update tasks based on spec changes
 ```
 
 > **Note:** Actual CLI commands may vary. Refer to [GitHub Spec Kit documentation](https://github.com/github/spec-kit) for the latest syntax.

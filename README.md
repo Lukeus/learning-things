@@ -20,10 +20,17 @@ This repo teaches **Spec Kit**–style Spec-Driven Development using AI coding a
 
 ## Quick Start
 
-**Choose your package manager:** Use either npm (included with Node.js) or pnpm (faster, space-efficient). All examples show both.
+### Recommended: Work in VS Code
+- Launch VS Code and open this folder (`File → Open Folder…`).
+- Use the integrated terminal (`Terminal → New Terminal`) so path separators and encodings match the scripts.
+- Run the setup and lab commands from that terminal or via VS Code tasks if you prefer.
+- Keep the lab `README.md` files open in the editor while you work; follow the instructions step by step.
+
+**Choose your package manager:** Use either npm (bundled with Node.js) or pnpm. If pnpm is not available, the setup scripts fall back to `corepack` and `npx pnpm@latest` automatically.
 
 ### Unix/macOS
 ```bash
+# From the VS Code terminal
 # Install dependencies (choose one)
 npm install
 # OR
@@ -35,13 +42,14 @@ pnpm install
 
 ### Windows (PowerShell)
 ```powershell
+# From the VS Code terminal
 # Install dependencies (choose one)
 npm install
 # OR
 pnpm install
 
-.\scripts\setup.ps1       # checks Node/npm/pnpm and installs GitHub Spec Kit if missing
-.\scripts\print-tree.ps1  # shows repo layout
+./scripts/setup.ps1       # checks Node/npm/pnpm and installs GitHub Spec Kit if missing
+./scripts/print-tree.ps1  # shows repo layout
 ```
 
 If the automated install fails, follow the instructions in the [GitHub Spec Kit repository](https://github.com/github/spec-kit) to install or update the CLI before starting the labs.
@@ -49,8 +57,8 @@ If the automated install fails, follow the instructions in the [GitHub Spec Kit 
 ### Spec Kit Primer (New Users)
 If you have never used Spec Kit:
 
-1. Run `spec-kit init` inside your project directory.
-2. Generate artifacts: `spec-kit generate principles spec clarifications plan tasks`.
+1. Run `specify init` inside your project directory.
+2. Generate artifacts: `specify generate principles spec clarifications plan tasks`.
 3. Fill out each file using the templates and scenarios provided in the labs.
 4. Use the clarify → plan → tasks loop before writing code.
 5. Keep artifacts updated; if implementation reveals gaps, revise spec/plan/tasks first.
@@ -66,7 +74,7 @@ Follow this sequence:
 1. Start with [Lab A – Greenfield](labs/lab-a-greenfield/README.md) – build a tiny feature from scratch using the spec → plan → tasks → implement loop.
 2. Then proceed to [Lab B – Brownfield](labs/lab-b-brownfield/README.md) – add a feature to an existing repo and backfill specs/tests for one legacy flow.
 
-You can open each linked `README.md` directly and work through the steps with your AI assistant.
+Open each linked `README.md` in VS Code and drive the steps from the integrated terminal with your AI assistant.
 
 ## Definitions of Done (per lab)
 - **Lab A**: Principles committed; Spec/Clarifications/Plan/Tasks authored; minimal feature passes tests in CI.

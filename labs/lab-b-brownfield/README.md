@@ -3,14 +3,14 @@
 **Goal**: Use SDD to add a feature to an existing repo and backfill specs/tests for one legacy flow.
 
 ## Steps
-1. Choose an existing service/codebase to add a feature to (your own project or a small open-source repo).
-2. Use the GitHub Spec Kit CLI to scaffold artifacts as needed:
+1. Choose an existing service/codebase to add a feature to (your own project or a small open-source repo) and open it in VS Code.
+2. Use the GitHub Spec Kit CLI (`specify`) from the VS Code integrated terminal to scaffold artifacts as needed:
    ```bash
-   spec-kit init
-   spec-kit generate spec           # For new feature
-   spec-kit generate clarifications
-   spec-kit generate plan
-   spec-kit generate tasks
+   specify init
+   specify generate spec            # For new feature
+   specify generate clarifications
+   specify generate plan
+   specify generate tasks
    ```
 3. Create `Baseline.md` using `../../templates/Baseline.md` to summarize current endpoints/domain.
 4. Author `Spec.md` for the new feature (see `SCENARIO.md` for requirements); avoid large refactors in the spec.
