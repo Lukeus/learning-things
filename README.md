@@ -48,8 +48,8 @@ npm install
 # OR
 pnpm install
 
-./scripts/setup.ps1       # checks Node/npm/pnpm and installs GitHub Spec Kit if missing
-./scripts/print-tree.ps1  # shows repo layout
+.\scripts\setup.ps1       # checks Node/npm/pnpm and installs GitHub Spec Kit if missing
+.\scripts\print-tree.ps1  # shows repo layout
 ```
 
 If the automated install fails, follow the instructions in the [GitHub Spec Kit repository](https://github.com/github/spec-kit) to install or update the CLI before starting the labs.
