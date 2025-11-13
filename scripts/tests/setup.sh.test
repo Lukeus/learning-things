@@ -26,14 +26,14 @@ assert_contains() {
   local needle=$2
   if [[ "$haystack" != *"$needle"* ]]; then
     record_failure "expected output to contain: $needle"
-    printf '--- output ---\n%s\n-------------\n' "$haystack" >&2
+    printf -- '--- output ---\n%s\n-------------\n' "$haystack" >&2
   fi
 }
 
 test_missing_node() {
   set +e
   local output
-  output=$(env -i PATH="" bash "$setup_script" 2>&1)
+  output=$(env -i PATH="" "$BASH" "$setup_script" 2>&1)
   local status=$?
   set -e
 
@@ -52,18 +52,18 @@ test_success_with_pnpm() {
   temp_dirs+=("$temp_dir")
 
   cat <<'EOF' >"${temp_dir}/node"
-#!/usr/bin/env bash
+#!/bin/sh
 echo "v22.0.0"
 EOF
 
   cat <<'EOF' >"${temp_dir}/npm"
-#!/usr/bin/env bash
+#!/bin/sh
 exit 0
 EOF
 
   cat <<'EOF' >"${temp_dir}/pnpm"
-#!/usr/bin/env bash
-if [[ "$1" == "-v" ]]; then
+#!/bin/sh
+if [ "$1" = "-v" ]; then
   echo "9.0.0"
 else
   echo "pnpm stub"
@@ -71,8 +71,8 @@ fi
 EOF
 
   cat <<'EOF' >"${temp_dir}/specify"
-#!/usr/bin/env bash
-if [[ "$1" == "--version" ]]; then
+#!/bin/sh
+if [ "$1" = "--version" ]; then
   echo "1.2.3"
   exit 0
 fi
@@ -83,7 +83,7 @@ EOF
 
   set +e
   local output
-  output=$(PATH="${temp_dir}:$PATH" bash "$setup_script" 2>&1)
+  output=$(PATH="${temp_dir}:$PATH" "$BASH" "$setup_script" 2>&1)
   local status=$?
   set -e
 
@@ -104,18 +104,18 @@ test_npx_fallback() {
   temp_dirs+=("$temp_dir")
 
   cat <<'EOF' >"${temp_dir}/node"
-#!/usr/bin/env bash
+#!/bin/sh
 echo "v22.0.0"
 EOF
 
   cat <<'EOF' >"${temp_dir}/npm"
-#!/usr/bin/env bash
+#!/bin/sh
 exit 0
 EOF
 
   cat <<'EOF' >"${temp_dir}/npx"
-#!/usr/bin/env bash
-if [[ "$1" == "--yes" && "$2" == "pnpm@latest" && "$3" == "--" && "$4" == "--version" ]]; then
+#!/bin/sh
+if [ "$1" = "--yes" ] && [ "$2" = "pnpm@latest" ] && [ "$3" = "--" ] && [ "$4" = "--version" ]; then
   echo "9.1.0"
   exit 0
 fi
@@ -123,8 +123,8 @@ exit 1
 EOF
 
   cat <<'EOF' >"${temp_dir}/specify"
-#!/usr/bin/env bash
-if [[ "$1" == "--version" ]]; then
+#!/bin/sh
+if [ "$1" = "--version" ]; then
   echo "1.2.3"
   exit 0
 fi
@@ -132,23 +132,23 @@ echo "specify stub"
 EOF
 
   cat <<'EOF' >"${temp_dir}/tail"
-#!/usr/bin/env bash
-if [[ "$1" == "-n" && "$2" == "1" ]]; then
+#!/bin/sh
+if [ "$1" = "-n" ] && [ "$2" = "1" ]; then
   shift 2
   last=""
-  if [[ $# -eq 0 ]]; then
+  if [ $# -eq 0 ]; then
     while IFS= read -r line; do
       last="$line"
     done
   else
-    while (($#)); do
+    while [ $# -gt 0 ]; do
       while IFS= read -r line; do
         last="$line"
       done <"$1"
       shift
     done
   fi
-  [[ -n "$last" ]] && printf '%s\n' "$last"
+  [ -n "$last" ] && printf '%s\n' "$last"
   exit 0
 fi
 echo "tail stub only supports '-n 1'" >&2
@@ -159,7 +159,7 @@ EOF
 
   set +e
   local output
-  output=$(PATH="${temp_dir}" bash "$setup_script" 2>&1)
+  output=$(PATH="${temp_dir}" "$BASH" "$setup_script" 2>&1)
   local status=$?
   set -e
 
